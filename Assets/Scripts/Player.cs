@@ -7,6 +7,7 @@ public class Player : MonoBehaviour {
     private CharacterController controller;
     private float gravity = 9.8f;
     private float speed = 10f;
+    private bool isMoving = false;
     private bool isAlive = true;
 
     // Start is called before the first frame update
@@ -16,14 +17,14 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        Vector3 _postion = this.move();
+        this.isMoving = this.move();
 
         if (Input.GetKeyDown(KeyCode.R) || !this.isAlive) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 
-    private Vector3 move() {
+    private bool move() {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
         float s = this.speed * Time.deltaTime;
@@ -37,10 +38,14 @@ public class Player : MonoBehaviour {
             }
         }
 
-        return this.controller.transform.position;
+        return direction.magnitude > 0;
     }
 
-    public void setIsAlive(bool isAlive) {
-        this.isAlive = isAlive;
+    public void dead() {
+        this.isAlive = false;
+    }
+
+    public bool getIsMoving() {
+        return this.isMoving;
     }
 }
