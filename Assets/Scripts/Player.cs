@@ -7,7 +7,7 @@ public class Player : MonoBehaviour {
     private CharacterController controller;
     private float gravity = 9.8f;
     private float speed = 10f;
-    private bool isDead = false;
+    private bool isAlive = true;
 
     // Start is called before the first frame update
     void Start() {
@@ -18,7 +18,7 @@ public class Player : MonoBehaviour {
     void Update() {
         Vector3 _postion = this.move();
 
-        if (Input.GetKeyDown(KeyCode.R) || this.isDead) {
+        if (Input.GetKeyDown(KeyCode.R) || !this.isAlive) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
@@ -33,14 +33,14 @@ public class Player : MonoBehaviour {
         if (!controller.isGrounded) {
             this.controller.Move(Vector3.down * this.gravity * Time.deltaTime);
             if (this.controller.transform.position.y < -10) {
-                this.isDead = true;
+                this.isAlive = false;
             }
         }
 
         return this.controller.transform.position;
     }
 
-    public void setIsDead(bool isDead) {
-        this.isDead = isDead;
+    public void setIsAlive(bool isAlive) {
+        this.isAlive = isAlive;
     }
 }
