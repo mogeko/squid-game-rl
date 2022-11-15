@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class Supervisor : MonoBehaviour {
     private Player player;
+    private Ground ground;
 
     // Start is called before the first frame update
     void Start() {
         this.player = GameObject.Find("Player").GetComponent<Player>();
+        this.ground = GameObject.Find("Ground").GetComponent<Ground>();
         StartCoroutine(this.checkPlayer());
     }
 
@@ -22,11 +24,11 @@ public class Supervisor : MonoBehaviour {
     IEnumerator checkPlayer() {
         while (true) {
             var randomTime = Random.Range(3.0f, 6.0f);
-            Debug.Log("We will check you after " + randomTime + 0.5f + " second!");
+            Debug.Log("Supervisor: Check in " + randomTime + 0.5f + " seconds!");
             yield return new WaitForSeconds(randomTime);
-            Debug.Log("We will check you after 0.5 second!");
+            this.ground.checking();
             yield return new WaitForSeconds(0.5f);
-            Debug.Log("Checking..." + this.player.getIsMoving());
+            this.ground.normal();
             if (this.player.getIsMoving()) {
                 this.lose();
             }
@@ -35,14 +37,14 @@ public class Supervisor : MonoBehaviour {
 
     void win() {
         if (!IsInvoking("restart")) {
-            Debug.Log("You win!");
+            this.ground.win();
             Invoke("restart", 0.1f);
         }
     }
 
     void lose() {
         if (!IsInvoking("restart")) {
-            Debug.Log("You dead!");
+            this.ground.lose();
             Invoke("restart", 0.1f);
         }
     }
