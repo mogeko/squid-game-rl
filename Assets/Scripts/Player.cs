@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
@@ -8,7 +7,6 @@ public class Player : MonoBehaviour {
     private float gravity = 9.8f;
     private float speed = 10f;
     private bool isMoving = false;
-    private bool isAlive = true;
 
     // Start is called before the first frame update
     void Start() {
@@ -18,10 +16,6 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         this.isMoving = this.move();
-
-        if (Input.GetKeyDown(KeyCode.R) || !this.isAlive) {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
     }
 
     private bool move() {
@@ -33,19 +27,16 @@ public class Player : MonoBehaviour {
         this.controller.Move(direction * this.speed * Time.deltaTime);
         if (!controller.isGrounded) {
             this.controller.Move(Vector3.down * this.gravity * Time.deltaTime);
-            if (this.controller.transform.position.y < -10) {
-                this.isAlive = false;
-            }
         }
 
         return direction.magnitude > 0;
     }
 
-    public void dead() {
-        this.isAlive = false;
-    }
-
     public bool getIsMoving() {
         return this.isMoving;
+    }
+
+    public Vector3 getPosition() {
+        return this.controller.transform.position;
     }
 }
