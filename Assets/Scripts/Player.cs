@@ -33,9 +33,7 @@ public class Player : MonoBehaviour {
         this.controller.Move(direction * this.speed * Time.deltaTime);
         if (!controller.isGrounded) {
             this.controller.Move(Vector3.down * this.gravity * Time.deltaTime);
-            if (this.controller.transform.position.y < -10) {
-                this.isAlive = false;
-            }
+            this.isAlive = this.getPosition().y > -10;
         }
 
         return direction.magnitude > 0;
@@ -47,5 +45,9 @@ public class Player : MonoBehaviour {
 
     public bool getIsMoving() {
         return this.isMoving;
+    }
+
+    public Vector3 getPosition() {
+        return this.controller.transform.position;
     }
 }
