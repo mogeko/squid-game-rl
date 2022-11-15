@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class Supervisor : MonoBehaviour {
@@ -20,8 +21,10 @@ public class Supervisor : MonoBehaviour {
     }
 
     void win() {
-        Debug.Log("You win!");
-        this.player.Invoke("dead", 1);
+        if (!IsInvoking("restart")) {
+            Debug.Log("You win!");
+            Invoke("restart", 1);
+        }
     }
 
     bool checkWin() {
@@ -36,5 +39,9 @@ public class Supervisor : MonoBehaviour {
         if (this.player.getIsMoving()) {
             this.player.dead();
         }
+    }
+
+    void restart() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
