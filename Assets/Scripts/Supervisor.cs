@@ -9,21 +9,17 @@ public class Supervisor : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         this.player = GameObject.Find("Player").GetComponent<Player>();
+        StartCoroutine(this.checkPlayer());
     }
 
     void Update() {
         if (this.checkWin()) this.win();
-        if (!IsInvoking("checkPlayer")) {
-            var randomTime = Random.Range(4, 7);
-            Invoke("remind", randomTime - 1);
-            Invoke("checkPlayer", randomTime);
-        }
     }
 
     void win() {
         if (!IsInvoking("restart")) {
             Debug.Log("You win!");
-            Invoke("restart", 1);
+            Invoke("restart", 0.1f);
         }
     }
 
@@ -31,13 +27,17 @@ public class Supervisor : MonoBehaviour {
         return this.player.getPosition().z < -40;
     }
 
-    void remind() {
-        Debug.Log("We will check you after 1 second!");
-    }
-
-    void checkPlayer() {
-        if (this.player.getIsMoving()) {
-            this.player.dead();
+    IEnumerator checkPlayer() {
+        while (true) {
+            var randomTime = Random.Range(3.0f, 6.0f);
+            Debug.Log("We will check you after " + randomTime + 0.5f + " second!");
+            yield return new WaitForSeconds(randomTime);
+            Debug.Log("We will check you after 0.5 second!");
+            yield return new WaitForSeconds(0.5f);
+            Debug.Log("Checking..." + this.player.getIsMoving());
+            if (this.player.getIsMoving()) {
+                this.restart();
+            }
         }
     }
 
