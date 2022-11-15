@@ -13,18 +13,10 @@ public class Supervisor : MonoBehaviour {
     }
 
     void Update() {
-        if (this.checkWin()) this.win();
-    }
+        if (this.player.getPosition().z < -40) this.win();
+        if (this.player.getPosition().y < -10) this.lose();
 
-    void win() {
-        if (!IsInvoking("restart")) {
-            Debug.Log("You win!");
-            Invoke("restart", 0.1f);
-        }
-    }
-
-    bool checkWin() {
-        return this.player.getPosition().z < -40;
+        if (Input.GetKeyDown(KeyCode.R)) this.restart();
     }
 
     IEnumerator checkPlayer() {
@@ -36,8 +28,22 @@ public class Supervisor : MonoBehaviour {
             yield return new WaitForSeconds(0.5f);
             Debug.Log("Checking..." + this.player.getIsMoving());
             if (this.player.getIsMoving()) {
-                this.restart();
+                this.lose();
             }
+        }
+    }
+
+    void win() {
+        if (!IsInvoking("restart")) {
+            Debug.Log("You win!");
+            Invoke("restart", 0.1f);
+        }
+    }
+
+    void lose() {
+        if (!IsInvoking("restart")) {
+            Debug.Log("You dead!");
+            Invoke("restart", 0.1f);
         }
     }
 
