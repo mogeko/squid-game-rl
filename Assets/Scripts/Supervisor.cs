@@ -15,7 +15,7 @@ public class Supervisor : MonoBehaviour {
     }
 
     void Update() {
-        if (this.player.getPosition().z < -40) this.win();
+        if (this.player.getPosition().z < -25) this.win();
         if (this.player.getPosition().y < -10) this.lose();
 
         if (Input.GetKeyDown(KeyCode.R)) this.restart();
@@ -23,11 +23,11 @@ public class Supervisor : MonoBehaviour {
 
     IEnumerator checkPlayer() {
         while (true) {
-            var randomTime = Random.Range(3.0f, 6.0f);
+            var randomTime = Random.Range(2.0f, 5.0f);
             Debug.Log("Supervisor: Check in " + randomTime + 0.5f + " seconds!");
             yield return new WaitForSeconds(randomTime);
             this.ground.checking();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.3f);
             this.ground.normal();
             if (this.player.getIsMoving()) {
                 this.lose();
