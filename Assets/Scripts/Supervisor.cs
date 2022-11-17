@@ -1,24 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class Supervisor : MonoBehaviour {
     private Player player;
     private Ground ground;
 
-    // Start is called before the first frame update
     void Start() {
         this.player = GameObject.Find("Player").GetComponent<Player>();
         this.ground = GameObject.Find("Ground").GetComponent<Ground>();
         StartCoroutine(this.checkPlayer());
-    }
-
-    void Update() {
-        if (this.player.getPosition().z < -25) this.win();
-        if (this.player.getPosition().y < -10) this.lose();
-
-        if (Input.GetKeyDown(KeyCode.R)) this.restart();
     }
 
     IEnumerator checkPlayer() {
@@ -30,26 +21,8 @@ public class Supervisor : MonoBehaviour {
             yield return new WaitForSeconds(0.3f);
             this.ground.normal();
             if (this.player.getIsMoving()) {
-                this.lose();
+                StartCoroutine(DeadLine.dead());
             }
         }
-    }
-
-    void win() {
-        if (!IsInvoking("restart")) {
-            this.ground.win();
-            Invoke("restart", 0.1f);
-        }
-    }
-
-    void lose() {
-        if (!IsInvoking("restart")) {
-            this.ground.lose();
-            Invoke("restart", 0.1f);
-        }
-    }
-
-    void restart() {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

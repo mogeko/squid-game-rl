@@ -20,7 +20,7 @@ public class Ground : MonoBehaviour {
         this.material.color = Color.green;
     }
 
-    public void lose() {
+    public void dead() {
         this.material.color = Color.red;
     }
 
