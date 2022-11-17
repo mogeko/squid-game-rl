@@ -7,7 +7,7 @@ public class WinLine : MonoBehaviour {
     private Collider targetMesh;
 
     void Start() {
-        this.targetMesh = GetComponent<Collider>();
+        this.targetMesh = this.GetComponent<Collider>();
     }
 
     void OnTriggerEnter(Collider other) {
@@ -20,6 +20,6 @@ public class WinLine : MonoBehaviour {
     public static IEnumerator win() {
         GameObject.Find("Ground").GetComponent<Ground>().win();
         yield return new WaitForSeconds(0.1f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

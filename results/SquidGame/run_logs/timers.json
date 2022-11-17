@@ -1,0 +1,42 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1668724461",
+        "python_version": "3.7.0 | packaged by conda-forge | (default, Nov 12 2018, 12:34:36) \n[Clang 4.0.1 (tags/RELEASE_401/final)]",
+        "command_line_arguments": "/opt/homebrew/Caskroom/miniconda/base/envs/ml-agents/bin/mlagents-learn config/squid_game_rl_config.yaml --run-id=SquidGame --force",
+        "mlagents_version": "0.28.0",
+        "mlagents_envs_version": "0.28.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.7.1",
+        "numpy_version": "1.21.6",
+        "end_time_seconds": "1668724524"
+    },
+    "total": 63.280427583000005,
+    "count": 1,
+    "self": 0.01135195700000935,
+    "children": {
+        "run_training.setup": {
+            "total": 0.017451041999999917,
+            "count": 1,
+            "self": 0.017451041999999917
+        },
+        "TrainerController.start_learning": {
+            "total": 63.251624584,
+            "count": 1,
+            "self": 0.00020329199999480352,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 63.251321709,
+                    "count": 1,
+                    "self": 63.251321709
+                },
+                "TrainerController._save_models": {
+                    "total": 9.958300000079134e-05,
+                    "count": 1,
+                    "self": 9.958300000079134e-05
+                }
+            }
+        }
+    }
+}
