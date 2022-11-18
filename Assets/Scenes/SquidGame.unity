@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 35340040}
   - component: {fileID: 35340044}
   m_Layer: 0
-  m_Name: WinLine
+  m_Name: WinTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -382,8 +382,8 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  target: {fileID: 0}
-  remind: {fileID: 0}
+  Target: {fileID: 0}
+  Remind: {fileID: 0}
 --- !u!114 &82898575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -428,6 +428,7 @@ GameObject:
   - component: {fileID: 113313816}
   - component: {fileID: 113313815}
   - component: {fileID: 113313819}
+  - component: {fileID: 113313820}
   m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
@@ -526,6 +527,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd64abb43231c43e39a00968be238479, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &113313820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113313814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c2ffe8351091477596ebbae7b08f8f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &490276639
@@ -848,7 +861,7 @@ GameObject:
   - component: {fileID: 983097482}
   - component: {fileID: 983097485}
   m_Layer: 0
-  m_Name: DeadLine
+  m_Name: DeathTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

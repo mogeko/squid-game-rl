@@ -21,7 +21,7 @@ public class Supervisor : MonoBehaviour {
             yield return new WaitForSeconds(0.3f);
             this.ground.normal();
             if (this.player.getIsMoving()) {
-                StartCoroutine(DeadLine.dead());
+                StartCoroutine(Game.lose());
             }
         }
     }
