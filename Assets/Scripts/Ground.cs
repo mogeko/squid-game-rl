@@ -8,7 +8,7 @@ public class Ground : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        this.material = GetComponent<Renderer>().material;
+        this.material = this.GetComponent<Renderer>().material;
         this.normalColor = this.material.color;
     }
 
@@ -20,7 +20,7 @@ public class Ground : MonoBehaviour {
         this.material.color = Color.green;
     }
 
-    public void lose() {
+    public void dead() {
         this.material.color = Color.red;
     }
 
