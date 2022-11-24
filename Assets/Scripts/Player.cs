@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
         float v = Input.GetAxisRaw("Vertical");
 
         Vector3 direction = (transform.forward * h) - (transform.right * v);
-        this.rBody.transform.position += direction * this.speed * Time.deltaTime;
+        this.transform.position += direction * this.speed * Time.deltaTime;
 
         return direction.magnitude > 0;
     }

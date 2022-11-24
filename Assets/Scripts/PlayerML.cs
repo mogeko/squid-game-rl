@@ -34,12 +34,14 @@ public class PlayerML : Agent
         sensor.AddObservation(this.Remind.color.a); // 1d
     }
 
+    private float speed = 10f;
     public override void OnActionReceived(ActionBuffers actions)
     {
         float h = actions.ContinuousActions[0];
         float v = actions.ContinuousActions[1];
 
-        bool isMoving = this.move(h, v);
+        Vector3 direction = (transform.forward * h) - (transform.right * v);
+        this.transform.position += direction * this.speed * Time.deltaTime;
 
         float distanceToTarget = Vector3.Distance(this.transform.localPosition, this.Target.localPosition);
 
@@ -61,16 +63,5 @@ public class PlayerML : Agent
 
         actions[0] = Input.GetAxisRaw("Horizontal");
         actions[1] = Input.GetAxisRaw("Vertical");
-
-        Debug.Log("Heuristic: " + actions[0] + ", " + actions[1]);
-    }
-
-    private float speed = 10f;
-    private bool move(float h, float v)
-    {
-        Vector3 direction = (transform.forward * h) - (transform.right * v);
-        this.rBody.transform.position += direction * this.speed * Time.deltaTime;
-
-        return direction.magnitude > 0;
     }
 }
