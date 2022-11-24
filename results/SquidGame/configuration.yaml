@@ -1,22 +1,22 @@
 default_settings: null
 behaviors:
-  RollerBall:
+  SquidGame:
     trainer_type: ppo
     hyperparameters:
-      batch_size: 10
-      buffer_size: 100
-      learning_rate: 0.0003
-      beta: 0.0005
+      batch_size: 256
+      buffer_size: 32768
+      learning_rate: 0.0001
+      beta: 0.005
       epsilon: 0.2
-      lambd: 0.99
+      lambd: 0.95
       num_epoch: 3
       learning_rate_schedule: linear
-      beta_schedule: constant
+      beta_schedule: linear
       epsilon_schedule: linear
     network_settings:
       normalize: false
-      hidden_units: 128
-      num_layers: 2
+      hidden_units: 256
+      num_layers: 3
       vis_encode_type: simple
       memory: null
       goal_conditioning_type: hyper
@@ -37,9 +37,9 @@ behaviors:
     keep_checkpoints: 5
     checkpoint_interval: 500000
     max_steps: 500000
-    time_horizon: 64
+    time_horizon: 128
     summary_freq: 10000
-    threaded: false
+    threaded: true
     self_play: null
     behavioral_cloning: null
 env_settings:
@@ -71,5 +71,5 @@ checkpoint_settings:
   inference: false
   results_dir: results
 torch_settings:
-  device: null
+  device: cpu
 debug: false

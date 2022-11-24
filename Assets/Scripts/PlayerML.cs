@@ -9,17 +9,14 @@ public class PlayerML : Agent
 {
     public Transform Target;
     public Material Remind;
-    CharacterController player;
-
-    public override void Initialize()
-    {
-        this.player = this.GetComponent<CharacterController>();
-        this.Target = GameObject.Find("WinLine").GetComponent<Collider>().transform;
-        this.Remind = GameObject.Find("Ground").GetComponent<Renderer>().material;
-    }
+    Rigidbody rBody;
 
     public override void OnEpisodeBegin()
     {
+        this.rBody = this.GetComponent<Rigidbody>();
+        this.Target = GameObject.Find("WinTrigger").GetComponent<Collider>().transform;
+        this.Remind = GameObject.Find("Ground").GetComponent<Renderer>().material;
+
         if (this.Remind.color == Color.red)
         {
             this.transform.localPosition = new Vector3(0, 1.0f, 25.0f);
@@ -31,37 +28,22 @@ public class PlayerML : Agent
         sensor.AddObservation(this.Target.localPosition); // 3d
         sensor.AddObservation(this.transform.localPosition); // 3d
 
-        sensor.AddObservation(this.player.velocity); // 3d
-
         sensor.AddObservation(this.Remind.color.r); // 1d
         sensor.AddObservation(this.Remind.color.g); // 1d
         sensor.AddObservation(this.Remind.color.b); // 1d
         sensor.AddObservation(this.Remind.color.a); // 1d
     }
 
-    private float speed = 10f;
-    public override void OnActionReceived(ActionBuffers actionBuffers)
+    public override void OnActionReceived(ActionBuffers actions)
     {
-        float h = actionBuffers.ContinuousActions[0];
-        float v = actionBuffers.ContinuousActions[1];
+        float h = actions.ContinuousActions[0];
+        float v = actions.ContinuousActions[1];
 
-        Vector3 direction = (transform.right * v) - (transform.forward * h);
-        this.player.Move(direction * this.speed * Time.deltaTime);
+        bool isMoving = this.move(h, v);
 
         float distanceToTarget = Vector3.Distance(this.transform.localPosition, this.Target.localPosition);
 
-        if (this.Remind.color == Color.yellow)
-        {
-            if (this.player.velocity.magnitude > 0)
-            {
-                SetReward(-1.0f);
-            }
-            else
-            {
-                SetReward(0.1f);
-            }
-        }
-        else if (this.Remind.color == Color.green)
+        if (this.Remind.color == Color.green)
         {
             SetReward(1.0f);
             EndEpisode();
@@ -75,8 +57,20 @@ public class PlayerML : Agent
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
-        var continuousActionsOut = actionsOut.ContinuousActions;
-        continuousActionsOut[0] = Input.GetAxis("Horizontal");
-        continuousActionsOut[1] = Input.GetAxis("Vertical");
+        ActionSegment<float> actions = actionsOut.ContinuousActions;
+
+        actions[0] = Input.GetAxisRaw("Horizontal");
+        actions[1] = Input.GetAxisRaw("Vertical");
+
+        Debug.Log("Heuristic: " + actions[0] + ", " + actions[1]);
+    }
+
+    private float speed = 10f;
+    private bool move(float h, float v)
+    {
+        Vector3 direction = (transform.forward * h) - (transform.right * v);
+        this.rBody.transform.position += direction * this.speed * Time.deltaTime;
+
+        return direction.magnitude > 0;
     }
 }
