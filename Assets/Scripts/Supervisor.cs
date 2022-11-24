@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Supervisor : MonoBehaviour
 {
-    private Player player;
+    private Rigidbody player;
     private Ground ground;
 
     void Start()
     {
-        this.player = GameObject.Find("Player").GetComponent<Player>();
+        this.player = GameObject.Find("Player").GetComponent<Rigidbody>();
         this.ground = GameObject.Find("Ground").GetComponent<Ground>();
         StartCoroutine(this.checkPlayer());
     }
@@ -19,12 +19,12 @@ public class Supervisor : MonoBehaviour
         while (true)
         {
             var randomTime = Random.Range(2.0f, 5.0f);
-            Debug.Log("Supervisor: Check in " + randomTime + 0.5f + " seconds!");
+            // Debug.Log("Supervisor: Check in " + randomTime + 0.5f + " seconds!");
             yield return new WaitForSeconds(randomTime);
             this.ground.checking();
             yield return new WaitForSeconds(0.3f);
             this.ground.normal();
-            if (this.player.getIsMoving())
+            if (this.player.velocity.magnitude > 0)
             {
                 StartCoroutine(Game.lose());
             }

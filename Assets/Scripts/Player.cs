@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private CharacterController controller;
-    private float gravity = 9.8f;
     private float speed = 10f;
     private bool isMoving = false;
+    Rigidbody rBody;
 
     void Start()
     {
-        this.controller = this.GetComponent<CharacterController>();
+        this.rBody = this.GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -24,12 +23,8 @@ public class Player : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        Vector3 direction = (transform.right * v) - (transform.forward * h);
-        this.controller.Move(direction * this.speed * Time.deltaTime);
-        if (!controller.isGrounded)
-        {
-            this.controller.Move(Vector3.down * this.gravity * Time.deltaTime);
-        }
+        Vector3 direction = (transform.forward * h) - (transform.right * v);
+        this.transform.position += direction * this.speed * Time.deltaTime;
 
         return direction.magnitude > 0;
     }
@@ -41,6 +36,6 @@ public class Player : MonoBehaviour
 
     public Vector3 getPosition()
     {
-        return this.controller.transform.position;
+        return this.transform.position;
     }
 }

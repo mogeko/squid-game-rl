@@ -2,7 +2,7 @@
     "name": "root",
     "metadata": {
         "timer_format_version": "0.1.0",
-        "start_time_seconds": "1668724461",
+        "start_time_seconds": "1669312328",
         "python_version": "3.7.0 | packaged by conda-forge | (default, Nov 12 2018, 12:34:36) \n[Clang 4.0.1 (tags/RELEASE_401/final)]",
         "command_line_arguments": "/opt/homebrew/Caskroom/miniconda/base/envs/ml-agents/bin/mlagents-learn config/squid_game_rl_config.yaml --run-id=SquidGame --force",
         "mlagents_version": "0.28.0",
@@ -10,31 +10,86 @@
         "communication_protocol_version": "1.5.0",
         "pytorch_version": "1.7.1",
         "numpy_version": "1.21.6",
-        "end_time_seconds": "1668724524"
+        "end_time_seconds": "1669312360"
     },
-    "total": 63.280427583000005,
+    "total": 31.941262875000003,
     "count": 1,
-    "self": 0.01135195700000935,
+    "self": 0.004275208000006359,
     "children": {
         "run_training.setup": {
-            "total": 0.017451041999999917,
+            "total": 0.015999499999999944,
             "count": 1,
-            "self": 0.017451041999999917
+            "self": 0.015999499999999944
         },
         "TrainerController.start_learning": {
-            "total": 63.251624584,
+            "total": 31.920988166999997,
             "count": 1,
-            "self": 0.00020329199999480352,
+            "self": 0.0008195010000022762,
             "children": {
                 "TrainerController._reset_env": {
-                    "total": 63.251321709,
+                    "total": 15.052856708,
                     "count": 1,
-                    "self": 63.251321709
+                    "self": 15.052856708
+                },
+                "TrainerController.advance": {
+                    "total": 16.81642375,
+                    "count": 1,
+                    "self": 0.0001207919999970386,
+                    "children": {
+                        "env_step": {
+                            "total": 16.816302958,
+                            "count": 1,
+                            "self": 16.81629725,
+                            "children": {
+                                "SubprocessEnvManager._take_step": {
+                                    "total": 5.707999999771118e-06,
+                                    "count": 1,
+                                    "self": 5.707999999771118e-06
+                                }
+                            }
+                        }
+                    }
+                },
+                "trainer_threads": {
+                    "total": 6.549999999805323e-05,
+                    "count": 1,
+                    "self": 6.549999999805323e-05,
+                    "children": {
+                        "thread_root": {
+                            "total": 0.0,
+                            "count": 0,
+                            "is_parallel": true,
+                            "self": 0.0,
+                            "children": {
+                                "trainer_advance": {
+                                    "total": 16.442406395000734,
+                                    "count": 118728,
+                                    "is_parallel": true,
+                                    "self": 0.7236347299999064,
+                                    "children": {
+                                        "process_trajectory": {
+                                            "total": 15.718771665000828,
+                                            "count": 118728,
+                                            "is_parallel": true,
+                                            "self": 15.718771665000828
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 },
                 "TrainerController._save_models": {
-                    "total": 9.958300000079134e-05,
+                    "total": 0.05082270799999833,
                     "count": 1,
-                    "self": 9.958300000079134e-05
+                    "self": 0.0005349159999994413,
+                    "children": {
+                        "RLTrainer._checkpoint": {
+                            "total": 0.05028779199999889,
+                            "count": 1,
+                            "self": 0.05028779199999889
+                        }
+                    }
                 }
             }
         }
