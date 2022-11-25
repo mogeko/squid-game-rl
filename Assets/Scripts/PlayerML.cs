@@ -11,6 +11,7 @@ public class PlayerML : Agent
     public Material Remind;
     Rigidbody rBody;
 
+    private float initDistanceToTarget;
     public override void OnEpisodeBegin()
     {
         this.rBody = this.GetComponent<Rigidbody>();
@@ -21,6 +22,11 @@ public class PlayerML : Agent
         {
             this.transform.localPosition = new Vector3(0, 1.0f, 25.0f);
         }
+
+        this.initDistanceToTarget = Vector3.Distance(
+            this.transform.localPosition,
+            this.Target.localPosition
+        );
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -43,16 +49,24 @@ public class PlayerML : Agent
         Vector3 direction = (transform.forward * h) - (transform.right * v);
         this.transform.position += direction * this.speed * Time.deltaTime;
 
-        float distanceToTarget = Vector3.Distance(this.transform.localPosition, this.Target.localPosition);
+        float distanceToTarget = Vector3.Distance(
+            this.transform.localPosition,
+            this.Target.localPosition
+        );
+        float schedule = (this.initDistanceToTarget - distanceToTarget) / this.initDistanceToTarget;
 
-        if (this.Remind.color == Color.green)
+        if (this.Remind.color == Color.yellow)
+        {
+            SetReward(direction.magnitude > 0 ? -0.5f : 0.5f);
+        }
+        else if (this.Remind.color == Color.green)
         {
             SetReward(1.0f);
             EndEpisode();
         }
         else if (this.Remind.color == Color.red)
         {
-            SetReward(-1.0f);
+            SetReward(schedule - 1.0f);
             EndEpisode();
         }
     }
