@@ -60,3 +60,5 @@ crashlytics-build.properties
 
 .python-env/
 ml-agents/
+
+results/
