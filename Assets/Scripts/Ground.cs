@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Ground : MonoBehaviour
 {
-    private Material material;
+    public Material material;
     private Color normalColor;
 
     // Start is called before the first frame update

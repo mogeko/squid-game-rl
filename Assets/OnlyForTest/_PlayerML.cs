@@ -5,7 +5,7 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
 
-public class PlayerML : Agent
+public class _PlayerML : Agent
 {
     public Transform Target;
     public Material Remind;
@@ -55,7 +55,9 @@ public class PlayerML : Agent
         float v = actions.ContinuousActions[1];
 
         Vector3 direction = (transform.forward * h) - (transform.right * v);
-        this.transform.position += direction * this.speed * Time.deltaTime;
+        if (this.Remind.color == Color.yellow) direction = Vector3.zero;
+
+        this.transform.localPosition += direction * this.speed * Time.deltaTime;
         this.transform.hasChanged = direction.magnitude > 0;
 
         float distanceToTarget = Vector3.Distance(
@@ -64,11 +66,7 @@ public class PlayerML : Agent
         );
         float schedule = (this.initDistanceToTarget - distanceToTarget) / this.initDistanceToTarget;
 
-        if (this.Remind.color == Color.yellow)
-        {
-            SetReward(direction.magnitude > 0 ? -1.0f : 1.0f);
-        }
-        else if (this.Remind.color == Color.green)
+        if (this.Remind.color == Color.green)
         {
             SetReward(1.0f);
             EndEpisode();
