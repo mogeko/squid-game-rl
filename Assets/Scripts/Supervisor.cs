@@ -19,15 +19,12 @@ public class Supervisor : MonoBehaviour
         while (true)
         {
             var randomTime = Random.Range(2.0f, 5.0f);
-            // Debug.Log("Supervisor: Check in " + randomTime + 0.5f + " seconds!");
             yield return new WaitForSeconds(randomTime);
             this.ground.checking();
             yield return new WaitForSeconds(0.3f);
-            this.ground.normal();
-            if (this.player.velocity.magnitude > 0)
-            {
+            if (this.player.transform.hasChanged)
                 StartCoroutine(Game.lose());
-            }
+            else this.ground.normal();
         }
     }
 }
